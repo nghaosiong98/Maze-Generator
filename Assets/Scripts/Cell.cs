@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public Transform directionPathPrefab;
+    public Transform connectionPrefab;
     public Transform wallPrefab;
     public bool pathVisible = true;
     private Transform floor;
@@ -43,29 +43,23 @@ public class Cell : MonoBehaviour
         }
     }
 
-
-    public void AddDirection(CellDirection direction)
+    public void AddConnection(CellDirection direction)
     {
-        connections[direction] = CreatePath(direction);
+        Transform connection = Instantiate(connectionPrefab);
+        connection.transform.parent = transform;
+        connection.localPosition = Vector3.zero;
+        connection.localRotation = direction.ToRotation();
+        connection.gameObject.SetActive(pathVisible);
+        connections[direction] = connection;
     }
 
-    public void RemoveDirection(CellDirection direction)
+    public void RemoveConnection(CellDirection direction)
     {
         if (connections[direction] != null)
         {
             Destroy(edges[direction].gameObject);
             connections[direction] = null;
         }
-    }
-
-    public Transform CreatePath(CellDirection direction)
-    {
-        Transform path = Instantiate(directionPathPrefab);
-        path.transform.parent = transform;
-        path.localPosition = Vector3.zero;
-        path.localRotation = direction.ToRotation();
-        path.gameObject.SetActive(pathVisible);
-        return path;
     }
 
     public Transform CreateWall(CellDirection direction)

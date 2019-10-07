@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7541ed9d3ec1f1749bc2524ccffc7fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionPathPrefab: {fileID: 6644521764870046788, guid: 7d53bca845252424f9e61a03368c5d2b,
+  connectionPrefab: {fileID: 6644521764870046788, guid: 7d53bca845252424f9e61a03368c5d2b,
     type: 3}
   wallPrefab: {fileID: 4260414733093507619, guid: 3ecd79a719b12424088e07689bbed707,
     type: 3}

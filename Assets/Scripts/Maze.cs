@@ -149,7 +149,7 @@ public class Maze : MonoBehaviour
             {
                 CellDirection fromDirection = direction.GetOpposite();
                 Cell nextCell = PlaceCell(nextLocation, fromDirection);
-                currentCell.AddDirection(direction); // Direction that connects it to the newly generated cell
+                currentCell.AddConnection(direction); // Direction that connects it to the newly generated cell
                 currentCell.name += "_" + direction;
 
                 return nextCell;
@@ -187,7 +187,7 @@ public class Maze : MonoBehaviour
     public Cell PlaceCell(CellLocation location, CellDirection fromDirection)
     {
         Cell cell = PlaceCell(location);
-        cell.AddDirection(fromDirection);
+        cell.AddConnection(fromDirection);
         return cell;
     }
 
@@ -215,7 +215,7 @@ public class Maze : MonoBehaviour
     {
         cell.Material = exitCellMaterial;
         CellDirection exitCellDirection = GetDirectionThatLeadstoOutOfBound(cell);
-        cell.AddDirection(exitCellDirection);
+        cell.AddConnection(exitCellDirection);
         exitCell = cell;
     }
 }
