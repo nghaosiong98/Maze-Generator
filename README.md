@@ -1,3 +1,3 @@
 # Maze-Generation
 Maze generation using Depth First Backtracking
-![alt text](screenshot.png)
+![alt text](screenshot.PNG)
