@@ -74,6 +74,46 @@ public class Maze : MonoBehaviour
         print("Generate complete");
     }
 
+    public IEnumerator GenerateBTA() {
+
+        for (int x = 0; x < width; x ++) {
+            for (int z = 0; z < height; z ++) {
+                print(String.Format("x: {0}, z: {1}", x, z));
+                CellLocation current_location = new CellLocation(x, z);
+                Cell currentCell = PlaceCell(current_location);
+
+                if (x == 0 && z == 0) {
+                    currentCell.Material = entryCellMaterial;
+                } else if (x == height-1 && z == width-1) {
+                    currentCell.Material = exitCellMaterial;
+                }
+
+                List<int> validDirections = new List<int>();
+                if (x > 0) validDirections.Add(2);
+                if (z > 0) validDirections.Add(1);
+                
+                if (validDirections.Count > 0) {
+                    validDirections.Shuffle();
+                    CellDirection selectedDirection = (CellDirection) validDirections[0];
+                    CellLocation neighbourLocation = currentCell.Location + selectedDirection.ToRelativeCellLocation();
+                    print(String.Format("nx: {0}, nz: {1}", neighbourLocation.x, neighbourLocation.z));
+                    CellDirection fromDirection = selectedDirection.GetOpposite();
+                    currentCell.AddConnection(selectedDirection);
+                    cells[neighbourLocation.x, neighbourLocation.z].AddConnection(fromDirection);
+                }
+                
+                currentLength++;
+                cellDistances[currentCell.Location.x, currentCell.Location.z] = currentLength;
+                activeCells.Add(currentCell);
+                yield return new WaitForSeconds(delay);
+            }
+        }
+
+        CreateCellWalls();
+
+        print("Generate complete");
+    }
+
     private bool exitCellDistanceCriteriaMet(Cell cell)
     {
         float ratio = cellDistances[cell.Location.x, cell.Location.z] / (float)(width * height);

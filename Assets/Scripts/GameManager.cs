@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator BeginGame()
     {
+        print("start game");
         mazeInstance = Instantiate(mazePrefab, new Vector3(0.5f, 0f, 0.5f), Quaternion.identity) as Maze;
-        yield return mazeInstance.Generate();
+        // yield return mazeInstance.Generate();
+        yield return mazeInstance.GenerateBTA();
     }
 
     private void RestartGame()
