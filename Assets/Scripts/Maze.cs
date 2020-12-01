@@ -84,8 +84,12 @@ public class Maze : MonoBehaviour
 
                 if (x == 0 && z == 0) {
                     currentCell.Material = entryCellMaterial;
+                    entryCell = currentCell;
                 } else if (x == height-1 && z == width-1) {
                     currentCell.Material = exitCellMaterial;
+                    CellDirection exitCellDirection = GetDirectionThatLeadstoOutOfBound(currentCell);
+                    currentCell.AddConnection(exitCellDirection);
+                    exitCell = currentCell;
                 }
 
                 List<int> validDirections = new List<int>();
